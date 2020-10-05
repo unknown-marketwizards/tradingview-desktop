@@ -20,6 +20,11 @@ app.on('ready', function () {
 
   let session = mainWindow.webContents.session
 
+  session.webRequest.onBeforeSendHeaders((details, callback) => {
+    details.requestHeaders['User-Agent'] = 'Chrome';
+    callback({cancel: false, requestHeaders: details.requestHeaders});
+  })
+
   /* get lang */
   session.cookies.get({
     url: 'https://www.tradingview.com',
