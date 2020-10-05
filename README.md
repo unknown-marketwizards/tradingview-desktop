@@ -6,14 +6,14 @@ Unofficial TradingView Desktop Version built with [Electron](https://www.electro
 
 [简体中文](README.zh.md)
 
-# How to buid
+# How to build
 
 * Install [Node.js](https://nodejs.org)
 
 * Clone this repo
 
   ```bash
-  git clone https://github.com/themarketwizard/tradingview-desktop.git
+  git clone https://github.com/unknown-marketwizards/tradingview-desktop.git
   ```
 
 * Enter folder

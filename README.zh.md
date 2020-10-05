@@ -11,7 +11,7 @@
 * Clone 本仓库
 
   ```bash
-  git clone https://github.com/themarketwizard/tradingview-desktop.git
+  git clone https://github.com/unknown-marketwizards/tradingview-desktop.git
   ```
 
 * 进入文件夹
