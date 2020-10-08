@@ -39,6 +39,11 @@ app.on('ready', function () {
     })
   })
 
+  /* block trial-notification */
+  const filter = {urls: ["https://*.tradingview.com/static/bundles/trial-notification.*.js"]}
+  session.webRequest.onBeforeRequest(filter, (_details, _callback) => {
+  })
+
   mainWindow.webContents.on('will-prevent-unload', function (event) {
     event.preventDefault()
   })

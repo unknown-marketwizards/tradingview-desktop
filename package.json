@@ -1,6 +1,6 @@
 {
   "name": "tradingview-desktop",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Unofficial TradingView Desktop Version",
   "main": "index.js",
   "license": "MIT",
