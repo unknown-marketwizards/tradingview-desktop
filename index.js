@@ -3,6 +3,15 @@ const windowStateKeeper = require("electron-window-state")
 
 let mainWindow = null
 
+/* block trial-notification, ads */
+const filter = {
+  urls: [
+    'https://*.tradingview.com/static/bundles/trial-notification.*.js',
+    'https://securepubads.g.doubleclick.net/gampad/ads?*'
+  ]
+}
+
+
 app.on('ready', function () {
   let mainWindowStateKeeper = windowStateKeeper({
     defaultWidth: 1024,
@@ -25,6 +34,9 @@ app.on('ready', function () {
     callback({cancel: false, requestHeaders: details.requestHeaders});
   })
 
+  session.webRequest.onBeforeRequest(filter, (_details, _callback) => {
+  })
+
   /* get lang */
   session.cookies.get({
     url: 'https://www.tradingview.com',
@@ -39,10 +51,6 @@ app.on('ready', function () {
     })
   })
 
-  /* block trial-notification */
-  const filter = {urls: ["https://*.tradingview.com/static/bundles/trial-notification.*.js"]}
-  session.webRequest.onBeforeRequest(filter, (_details, _callback) => {
-  })
 
   mainWindow.webContents.on('will-prevent-unload', function (event) {
     event.preventDefault()
