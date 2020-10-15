@@ -4,9 +4,30 @@
 
 ![](assets/images/screenshot.png)
 
+# 特性
+
+* 拦截广告
+* 拦截试用通知窗口
+* ~~检查新版本~~
+
+# 解决登陆失败问题
+
+如果登陆时遇到下面错误
+
+> You have been locked out due to too many login attempts. Please try again later.
+
+可以通过下面步骤解决：
+
+* 点击左上角菜单
+* 选择 Home
+* 选择 ZH 简体中文
+* 重新登陆
+
 # 如何构建
 
 * 安装 [Node.js](https://nodejs.org)
+
+* 打开 终端 / PowerShell / Cmd
 
 * Clone 本仓库
 
