@@ -9,7 +9,8 @@ Unofficial TradingView Desktop Version built with [Electron](https://www.electro
 # Features
 * Block ads
 * Block trial notification
-* ~~Check for updates~~
+* Refresh(F5)
+* Check for updates
 
 # Solve the login failure problem
 If the following situation occurs when you login
