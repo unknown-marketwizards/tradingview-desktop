@@ -2,7 +2,7 @@ const {app, BrowserWindow, Menu, globalShortcut, dialog, net} = require('electro
 const windowStateKeeper = require("electron-window-state")
 
 let update_check_url = 'https://api.github.com/repos/unknown-marketwizards/tradingview-desktop/releases/latest'
-let app_ver = process.env.npm_package_version
+const pkg = require("./package.json")
 let mainWindow = null
 
 /* block trial-notification, ads */
@@ -34,7 +34,10 @@ app.on('ready', function () {
 
   /* shortcut */
   globalShortcut.register('F5', function () {
-    BrowserWindow.getFocusedWindow().reload()
+    const w = BrowserWindow.getFocusedWindow()
+    if (w) {
+      w.reload()
+    }
   })
 
 
@@ -112,7 +115,7 @@ function checkUpdate() {
           return
         }
 
-        if (versionCompare(app_ver, obj.name)) {
+        if (versionCompare(pkg.version, obj.name)) {
           dialog.showMessageBox(mainWindow, {
             type: 'info',
             message: 'New Version Available',
