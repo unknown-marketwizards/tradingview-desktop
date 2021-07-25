@@ -39,6 +39,12 @@ app.on('ready', function () {
       w.reload()
     }
   })
+  globalShortcut.register('CommandOrControl+R', function () {
+    const w = BrowserWindow.getFocusedWindow()
+    if (w) {
+      w.reload()
+    }
+  })
 
 
   let session = mainWindow.webContents.session
@@ -110,6 +116,7 @@ function checkUpdate() {
     if (response.statusCode === 200) {
       response.on('data', (chunk) => {
 
+        console.log(chunk.toString())
         const obj = JSON.parse(chunk.toString());
         if (!obj.hasOwnProperty("name") || !obj.hasOwnProperty("html_url") || !obj.hasOwnProperty("body")) {
           return
