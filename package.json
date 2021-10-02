@@ -2,24 +2,26 @@
   "name": "tradingview-desktop",
   "version": "1.0.6",
   "description": "Unofficial TradingView Desktop Version",
-  "license": "MIT",
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.32.0",
-    "@typescript-eslint/parser": "^4.32.0",
-    "electron": "^15.0.0",
-    "eslint": "^7.32.0",
-    "typescript": "^4.3.5"
-  },
+  "main": "dist/main/index.js",
   "author": "marketwizards <marketwizards26@gmail.com>",
+  "license": "MIT",
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
-    "lint": "eslint -c .eslintrc --ext .ts ./src",
-    "start": "npm run build && electron ./dist/main.js"
+    "dev": "concurrently -n=R,P,M -c=green,yellow,blue \"npm run dev:render\" \"npm run dev:main\"",
+    "dev:render": "vite",
+    "dev:main": "node -r ts-node/register script/build-main --env=development --watch",
+    "//": "---------------------------------------------------------------------------------------------------",
+    "build:render": "vite build",
+    "build:main": "node -r ts-node/register script/build-main --env=production",
+    "build": "rimraf dist && npm run build:render && npm run build:main && electron-builder"
   },
   "build": {
     "appId": "com.themarketwizards.tradingview-desktop",
     "productName": "TradingView",
+    "asar": true,
+    "files": [
+      "!node_modules",
+      "dist/**"
+    ],
     "mac": {
       "identity": null,
       "icon": "assets/icons/tradingview.icns",
@@ -46,7 +48,29 @@
       "artifactName": "${productName}-${version}-${platform}-${arch}.${ext}"
     }
   },
+  "devDependencies": {
+    "@rollup/plugin-alias": "^3.1.5",
+    "@rollup/plugin-commonjs": "^21.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.0.5",
+    "@rollup/plugin-replace": "^3.0.0",
+    "@rollup/plugin-typescript": "^8.2.5",
+    "@types/minimist": "^1.2.2",
+    "@vitejs/plugin-vue": "^1.9.2",
+    "@vue/compiler-sfc": "^3.2.19",
+    "chalk": "^4.1.2",
+    "concurrently": "^6.3.0",
+    "electron": "15.1.0",
+    "electron-builder": "^22.11.5",
+    "minimist": "^1.2.5",
+    "ora": "^5.4.0",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3",
+    "vite": "^2.6.2"
+  },
   "dependencies": {
+    "vue": "^3.2.19",
     "electron-window-state": "^5.0.3"
   }
 }

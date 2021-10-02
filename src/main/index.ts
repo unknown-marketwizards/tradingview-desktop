@@ -1,9 +1,9 @@
-const {app, BrowserWindow, Menu, globalShortcut, dialog, net} = require('electron')
-const windowStateKeeper = require("electron-window-state")
+import {app, BrowserWindow, Menu, globalShortcut, dialog, net} from 'electron'
+import windowStateKeeper from "electron-window-state"
 
 let update_check_url = 'https://api.github.com/repos/unknown-marketwizards/tradingview-desktop/releases/latest'
-const pkg = require("../package.json")
-let mainWindow: any = null
+const pkg = require("../../package.json")
+let mainWindow: BrowserWindow | null = null
 
 /* block trial-notification, ads */
 const filter = {
@@ -67,8 +67,10 @@ app.on('ready', function () {
             langCode = cookies[0].value
         }
 
-        mainWindow.loadURL('https://' + langCode + '.tradingview.com/chart/').then((_r: any) => {
-        })
+        if (mainWindow) {
+            mainWindow.loadURL('https://' + langCode + '.tradingview.com/chart/').then((_r: any) => {
+            })
+        }
     })
 
 
@@ -123,16 +125,18 @@ function checkUpdate() {
                 }
 
                 if (versionCompare(pkg.version, obj.name)) {
-                    dialog.showMessageBox(mainWindow, {
-                        type: 'info',
-                        message: 'New Version Available',
-                        detail: obj.name + '\n' + obj.body,
-                        buttons: ['ok', 'cancel']
-                    }).then((index: any) => {
-                        if (index.response === 0) {
-                            openUpdatePage(obj.html_url)
-                        }
-                    })
+                    if (mainWindow) {
+                        dialog.showMessageBox(mainWindow, {
+                            type: 'info',
+                            message: 'New Version Available',
+                            detail: obj.name + '\n' + obj.body,
+                            buttons: ['ok', 'cancel']
+                        }).then((index: any) => {
+                            if (index.response === 0) {
+                                openUpdatePage(obj.html_url)
+                            }
+                        })
+                    }
                 }
             })
         }
@@ -143,10 +147,12 @@ function checkUpdate() {
 
 function openUpdatePage(url: string) {
 
-    let win = new BrowserWindow({width: 640, height: 480})
+    let win: BrowserWindow | null = new BrowserWindow({width: 640, height: 480})
 
     win.on("close", function () {
-        win = null
+        if (win) {
+            win = null
+        }
     })
     win.loadURL(url).then((_r: any) => {
     })

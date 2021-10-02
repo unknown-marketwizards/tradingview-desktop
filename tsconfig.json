@@ -1,15 +1,24 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "noImplicitAny": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "jsx": "preserve",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
     "sourceMap": true,
-    "outDir": "dist",
-    "baseUrl": ".",
+    "baseUrl": "./",
+    "strict": true,
     "paths": {
-      "*": ["node_modules/*"]
-    }
+      "@root/*": ["./*"],
+      "@/*": ["src/*"]
+    },
+    "allowSyntheticDefaultImports": true
   },
-  "include": [
-    "src/**/*"
-  ]
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
 }
