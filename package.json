@@ -2,15 +2,20 @@
   "name": "tradingview-desktop",
   "version": "1.0.6",
   "description": "Unofficial TradingView Desktop Version",
-  "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^10.1.3"
+    "@typescript-eslint/eslint-plugin": "^4.32.0",
+    "@typescript-eslint/parser": "^4.32.0",
+    "electron": "^15.0.0",
+    "eslint": "^7.32.0",
+    "typescript": "^4.3.5"
   },
   "author": "marketwizards <marketwizards26@gmail.com>",
   "scripts": {
-    "start": "electron .",
-    "build": "npx electron-builder build"
+    "build": "tsc",
+    "watch": "tsc -w",
+    "lint": "eslint -c .eslintrc --ext .ts ./src",
+    "start": "npm run build && electron ./dist/main.js"
   },
   "build": {
     "appId": "com.themarketwizards.tradingview-desktop",
