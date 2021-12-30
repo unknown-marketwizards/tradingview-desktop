@@ -1,76 +1,83 @@
 {
-  "name": "tradingview-desktop",
-  "version": "1.0.6",
-  "description": "Unofficial TradingView Desktop Version",
-  "main": "dist/main/index.js",
-  "author": "marketwizards <marketwizards26@gmail.com>",
-  "license": "MIT",
-  "scripts": {
-    "dev": "concurrently -n=R,P,M -c=green,yellow,blue \"npm run dev:render\" \"npm run dev:main\"",
-    "dev:render": "vite",
-    "dev:main": "node -r ts-node/register script/build-main --env=development --watch",
-    "//": "---------------------------------------------------------------------------------------------------",
-    "build:render": "vite build",
-    "build:main": "node -r ts-node/register script/build-main --env=production",
-    "build": "rimraf dist && npm run build:render && npm run build:main && electron-builder"
-  },
-  "build": {
-    "appId": "com.themarketwizards.tradingview-desktop",
-    "productName": "TradingView",
-    "asar": true,
-    "files": [
-      "!node_modules",
-      "dist/**"
-    ],
-    "mac": {
-      "identity": null,
-      "icon": "assets/icons/tradingview.icns",
-      "category": "public.app-category.finance",
-      "target": [
-        "dmg"
-      ],
-      "artifactName": "${productName}-${version}-${platform}.${ext}"
+    "name": "tradingview-desktop",
+    "version": "1.0.6",
+    "description": "Unofficial TradingView Desktop Version",
+    "main": "dist/main/index.js",
+    "author": "marketwizards <marketwizards26@gmail.com>",
+    "license": "MIT",
+    "scripts": {
+        "dev": "concurrently -n=R,P,M -c=green,yellow,blue \"npm run dev:render\" \"npm run dev:preload\" \"npm run dev:main\"",
+        "dev:render": "vite",
+        "dev:preload": "node -r ts-node/register script/build-preload --env=development --watch",
+        "dev:main": "node -r ts-node/register script/build-main --env=development --watch",
+        "//": "---------------------------------------------------------------------------------------------------",
+        "build:render": "vite build",
+        "build:preload": "node -r ts-node/register script/build-preload --env=production",
+        "build:main": "node -r ts-node/register script/build-main --env=production",
+        "build": "rimraf dist && npm run build:render && npm run build:preload && npm run build:main && electron-builder"
     },
-    "linux": {
-      "icon": "assets/icons/tradingview.png",
-      "category": "Finance",
-      "target": [
-        "zip"
-      ],
-      "artifactName": "${productName}-${version}-${platform}-${arch}.${ext}"
+    "build": {
+        "appId": "com.themarketwizards.tradingview-desktop",
+        "productName": "TradingView",
+        "asar": true,
+        "files": [
+            "!node_modules",
+            "dist/**"
+        ],
+        "mac": {
+            "identity": null,
+            "icon": "assets/icons/tradingview.icns",
+            "category": "public.app-category.finance",
+            "target": [
+                "dmg"
+            ],
+            "artifactName": "${productName}-${version}-${platform}.${ext}"
+        },
+        "linux": {
+            "icon": "assets/icons/tradingview.png",
+            "category": "Finance",
+            "target": [
+                "zip"
+            ],
+            "artifactName": "${productName}-${version}-${platform}-${arch}.${ext}"
+        },
+        "win": {
+            "icon": "assets/icons/tradingview.ico",
+            "publisherName": "themarketwizards",
+            "target": [
+                "zip"
+            ],
+            "artifactName": "${productName}-${version}-${platform}-${arch}.${ext}"
+        }
     },
-    "win": {
-      "icon": "assets/icons/tradingview.ico",
-      "publisherName": "themarketwizards",
-      "target": [
-        "zip"
-      ],
-      "artifactName": "${productName}-${version}-${platform}-${arch}.${ext}"
+    "devDependencies": {
+        "@rollup/plugin-alias": "^3.1.5",
+        "@rollup/plugin-commonjs": "^21.0.0",
+        "@rollup/plugin-json": "^4.1.0",
+        "@rollup/plugin-node-resolve": "^13.0.5",
+        "@rollup/plugin-replace": "^3.0.0",
+        "@rollup/plugin-typescript": "^8.2.5",
+        "@types/minimist": "^1.2.2",
+        "@vitejs/plugin-vue": "^1.9.2",
+        "@vue/compiler-sfc": "^3.2.19",
+        "chalk": "^4.1.2",
+        "concurrently": "^6.3.0",
+        "electron": "15.1.0",
+        "electron-builder": "^22.11.5",
+        "minimist": "^1.2.5",
+        "ora": "^5.4.0",
+        "rimraf": "^3.0.2",
+        "sass": "~1.42.1",
+        "sass-loader": "^12.1.0",
+        "ts-node": "^10.2.1",
+        "typescript": "^4.4.3",
+        "unplugin-auto-import": "^0.5.5",
+        "unplugin-vue-components": "^0.17.11",
+        "vite": "^2.6.2"
+    },
+    "dependencies": {
+        "electron-window-state": "^5.0.3",
+        "element-plus": "^1.2.0-beta.6",
+        "vue": "^3.2.19"
     }
-  },
-  "devDependencies": {
-    "@rollup/plugin-alias": "^3.1.5",
-    "@rollup/plugin-commonjs": "^21.0.0",
-    "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^13.0.5",
-    "@rollup/plugin-replace": "^3.0.0",
-    "@rollup/plugin-typescript": "^8.2.5",
-    "@types/minimist": "^1.2.2",
-    "@vitejs/plugin-vue": "^1.9.2",
-    "@vue/compiler-sfc": "^3.2.19",
-    "chalk": "^4.1.2",
-    "concurrently": "^6.3.0",
-    "electron": "15.1.0",
-    "electron-builder": "^22.11.5",
-    "minimist": "^1.2.5",
-    "ora": "^5.4.0",
-    "rimraf": "^3.0.2",
-    "ts-node": "^10.2.1",
-    "typescript": "^4.4.3",
-    "vite": "^2.6.2"
-  },
-  "dependencies": {
-    "vue": "^3.2.19",
-    "electron-window-state": "^5.0.3"
-  }
 }
